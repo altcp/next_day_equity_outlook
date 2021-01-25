@@ -6,7 +6,7 @@ A command line tool that provides a quantitative outlook for the next business d
 
 The tool retrieves price information for the equity instrument of your choice. It then automates the basic quantitative work. What you will see as a result of this automation is the outlook for the next business day.<br/><br/><br/>
 
-## Instructions
+## Instructions for the Use of a Release
 
 You can for example, use a Raspberry Pi or the Windows Subsystem for Linux. This requires Python 3.6.8 or above.<br/>
 In the Linux Terminal navigate to the base folder:<br/><br/>

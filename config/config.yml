@@ -23,7 +23,6 @@ api:
     chat_ID: 
 
 
-#To configure the Visualization Dashboard.
 configuration:
 
   #To configure the Visualization Notebook, you will need to provide the stock symbol in the prescibed notation 
