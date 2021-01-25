@@ -1,1 +1,33 @@
-#Config File
+#This is the Configuration fIle for the Project.
+#Variable on left (e.g., random_seed_ID), value on right (e.g., 123).
+#To 
+
+
+#For Monte Carlo Stimulation(s) or Reproducibility
+settings:
+  random_seed_ID: 123
+
+
+locations: 
+  model_path: 
+  fit_path: 
+  test_path: 
+
+
+api:
+  #Data Providers
+
+  #Delivery Methods
+  telegram:
+    token: 
+    chat_ID: 
+
+
+#To configure the Visualization Dashboard.
+configuration:
+
+  #To configure the Visualization Notebook, you will need to provide the stock symbol in the prescibed notation 
+  #as well as the country hosting the exchange in which the stock trades on.
+  default_stock_symbol: MFST
+  default_country_of_exchange: United States 
+  

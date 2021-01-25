@@ -8,7 +8,7 @@ The tool retrieves price information for the equity instrument of your choice. I
 
 ## Instructions
 
-You can for example, use a Raspberry Pi or the Windows Subsystem for Linux.<br/>
+You can for example, use a Raspberry Pi or the Windows Subsystem for Linux. This requires Python 3.6.8 or above.<br/>
 In the Linux Terminal navigate to the base folder:<br/><br/>
 
 1.To first install required dependencies, TYPE: pip install -r requirements.txt<br/>
