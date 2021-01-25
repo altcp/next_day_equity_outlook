@@ -1,10 +1,10 @@
 # Next Business Day Outlook
 
-A command line tool that provides a quantitative outlook for the next business day.
+A command line tool that provides a quantitative outlook for the next business day.<br/><br/><br/>
 
 ## Overview
 
-The tool retrieves price information for the equity instrument of your choice. It then automates the basic quantitative work. What you will see as a result of this automation is the outlook for the next business day.
+The tool retrieves price information for the equity instrument of your choice. It then automates the basic quantitative work. What you will see as a result of this automation is the outlook for the next business day.<br/><br/><br/>
 
 ## Instructions
 
@@ -39,4 +39,5 @@ I bear no responsibilty for any loss or financial loss incurred by you or by any
 
 ## Contributing
 
-You can contribute by informing me of typos, bugs, errors, omissions, improvements and general feedback. Further, please see CONTRIBUTING.md
+You can contribute by informing me of typos, bugs, errors, omissions, improvements and general feedback. Further, please see CONTRIBUTING.md<br/><br/><br/>
+
