@@ -16,8 +16,7 @@ In the Linux Terminal navigate to the base folder:<br/><br/>
 
 To configure this, navigate to the config subfolder and edit the config.yml file - Instructions Within.<br/><br/>
 
-To visualise your choice of instrument run the jupyter notebook, eda.ipynb in the base folder.<br/>
-You can do this in the Linux Terminal after navigating to your base folder, TYPE: jupyter lab<br/><br/><br/>
+To visualise your choice of instrument run the jupyter notebook, eda.ipynb in the base folder. You can do this in the Linux Terminal after navigating to your base folder, TYPE: jupyter lab<br/><br/><br/>
 
 ## Discussion
 
