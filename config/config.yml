@@ -5,6 +5,7 @@
 #For Monte Carlo Stimulation(s) or Reproducibility
 settings:
   random_seed_ID: 123
+  tech_disruptor: False
 
 
 locations: 
@@ -23,9 +24,10 @@ api:
 
 
 configuration:
-
   #To configure the Visualization Notebook, you will need to provide the stock symbol in the prescibed notation 
-  #as well as the country hosting the exchange in which the stock trades on.
+  #as well as the country hosting the exchange in which the stock trades on. 
+
+  #Do Follow the naming convention of the data scraping python package, InvestPy. 
   default_stock_symbol: MFST
   default_country_of_exchange: United States 
-  
+  default_stock_price: close
