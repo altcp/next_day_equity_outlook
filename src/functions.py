@@ -54,7 +54,7 @@ def process_data(display_charts, univariate, tech_disruptor=False):
         symbol = config['configuration']['default_stock_symbol']
         target = config['configuration']['default_stock_price']
 
-        df = investpy.get_stock_historical_data(stock=symbol, country=country, from_date=start, t0_date=end)
+        df = investpy.get_stock_historical_data(stock=symbol, country=country, from_date=start, to_date=end)
     
     else:
         
