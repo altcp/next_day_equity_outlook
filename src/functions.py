@@ -58,7 +58,7 @@ def process_data(display_charts, univariate, tech_disruptor=False):
     
     else:
         
-        conn = sqlite3.connect(config['settings']['default_country_of_exchange'])
+        conn = sqlite3.connect(config['settings']['db_path'])
         query = pd.read_sql_query('SELECT * FROM [CDB-QUERY]', conn)
         country = query['country']
         symbol = query['symbol']
