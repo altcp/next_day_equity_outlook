@@ -9,9 +9,10 @@ settings:
 
 
 locations: 
-  model_path: 
+  db_path: "./data/temp.db"
   fit_path: 
   test_path: 
+  model_path:
 
 
 api:
@@ -27,7 +28,7 @@ configuration:
   #To configure the Visualization Notebook, you will need to provide the stock symbol in the prescibed notation 
   #as well as the country hosting the exchange in which the stock trades on. 
 
-  #Do Follow the naming convention of the data scraping python package, InvestPy. 
+  #Do follow the naming convention of the data scraping python package, InvestPy. 
   default_stock_symbol: MFST
   default_country_of_exchange: United States 
   default_stock_price: close

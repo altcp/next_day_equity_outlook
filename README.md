@@ -6,7 +6,7 @@ A command line tool that provides a quantitative outlook for the next business d
 
 The tool retrieves price information for the equity instrument of your choice. It then automates the basic quantitative work. What you will see as a result of this automation is the outlook for the next business day.<br/><br/><br/>
 
-## Instructions for the Use of a Release
+## Instructions for the use of a release
 
 You can for example, use a Raspberry Pi or the Windows Subsystem for Linux. This requires Python 3.6.8 or above.<br/>
 In the Linux Terminal navigate to the base folder:<br/><br/>
@@ -22,7 +22,7 @@ To visualise your choice of instrument run the jupyter notebook, eda.ipynb in th
 
 I aim to write clear, simple and clean code so that others can inspect, maintain or append with ease. Sponsoring me helps others navigate better and with simplicity as it allows me to focus on delivering a better product or thing than on paying the bills.<br/><br/>
 
-You can do this thru GitHub Sponsors.<br/><br/><br/>
+You can do this thru GitHub Sponsors when it is made available to me.<br/><br/><br/>
 
 ## Disclaimer
 
