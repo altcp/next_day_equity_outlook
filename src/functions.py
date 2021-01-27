@@ -18,37 +18,33 @@ np.random.seed(ID)
 
 
 # %%
-def univariate_eda(dashboard=False):
+def get_eda(dashboard_required=False, univariate=True):
+    
+    TD = config['settings']['tech_disruptor']
 
-    # What is AI?
-    if (dashboard == False):
-        features, target, bins = process_data(False)
-
-        return None
-
+    if (TD == True):
+        features, target, bins = process_data(dashboard_required, univariate, TD)
     else:
-        
-        if (config['settings']['tech_disruptor'] == True):
-            features, target, bins = process_data(False)
-
-        else:
-
-            print(" ")
-            print(" ")
-            print("Sell Side Quantative Research Bot (SSQR)")
-            print("Next Business Day Outlook, 0.0.1")
-            print(" ")
-            print(" ")
-            features, target, bins = process_data(True)
-
-        return features, target, bins
+        print(" ")
+        print(" ")
+        print("Sell Side Quantative Research Bot (SSQR)")
+        print("Next Business Day Outlook, 0.0.1")
+        features, target, bins = process_data(dashboard_required, univariate)
+    
+    return features, target, bins
 
 
 # %%
-def process_data(display=True, univariate=True):
 
-    symbol = config['configuration']['default_stock_symbol']
+
+
+# %%
+def process_data(display_charts, univariate, tech_disruptor=False):
+
     country = config['configuration']['default_country_of_exchange']
+    symbol = config['configuration']['default_stock_symbol']
     target = config['configuration']['default_stock_price']
 
     return fit_x, fit_y, fit_bins
+
+
