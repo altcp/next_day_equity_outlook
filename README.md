@@ -17,7 +17,8 @@ In the Linux Terminal navigate to the base folder:<br/>
 1.To first install required dependencies, TYPE: pip install -r requirements.txt<br/>
 2.To run the CLI, TYPE: bash run.sh<br/><br/>
 
-To configure this, navigate to the config subfo/lder and edit the config.yml file - Instructions Within.<br/><br/>
+To configure this, navigate to the config subfolder and edit the config.yml file - Instructions Within.<br/>
+Alternatively, you can do this in the application via the command line interface.<br/><br/>
 
 To visualise your choice of instrument run the jupyter notebook, eda.ipynb in the base folder. You can do this in the Linux Terminal after navigating to your base folder, TYPE: jupyter lab<br/><br/><br/>
 
