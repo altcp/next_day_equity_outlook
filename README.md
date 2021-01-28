@@ -26,7 +26,7 @@ To visualise your choice of instrument run the jupyter notebook, eda.ipynb in th
 
 I aim to write clear, simple and clean code so that others can inspect, maintain or append with ease. Sponsoring me helps others navigate better and with simplicity as it allows me to focus on delivering a better product or thing than on paying the bills.<br/><br/>
 
-You can do this thru GitHub Sponsors when it is made available to me.<br/><br/><br/>
+You can do this thru GitHub Sponsors when it is made available to me if you like to.<br/><br/><br/>
 
 ## Disclaimer
 
