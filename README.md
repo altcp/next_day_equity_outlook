@@ -8,7 +8,8 @@ The tool retrieves price information for the equity instrument of your choice. I
 
 ## Instructions for the use of a release
 
-You can for example, use a Raspberry Pi or the Windows Subsystem for Linux. This requires Python 3.6.8 or above.<br/>
+Python 3.8.6 was the python version used in testing prior to containerization.<br/>
+You can, for example, use a Raspberry Pi or the Windows Subsystem for Linux once you have a correct python version installed.<br/>
 In the Linux Terminal navigate to the base folder:<br/><br/>
 
 1.To first install required dependencies, TYPE: pip install -r requirements.txt<br/>
