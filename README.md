@@ -8,17 +8,13 @@ The tool retrieves price information for the equity instrument of your choice. I
 
 ## Instructions for the use of a release
 
-Python 3.8.6 was the python version used in testing prior to containerization.<br/>
-You can, for example, use a Raspberry Pi or the Windows Subsystem for Linux once you have a correct python version installed.
-<br/><br/>
-
-In the Linux Terminal navigate to the base folder:<br/>
+You can for example, use a Raspberry Pi or the Windows Subsystem for Linux. This requires Python 3.6.8 or above.<br/>
+In the Linux Terminal navigate to the base folder:<br/><br/>
 
 1.To first install required dependencies, TYPE: pip install -r requirements.txt<br/>
 2.To run the CLI, TYPE: bash run.sh<br/><br/>
 
-To configure this, navigate to the config subfolder and edit the config.yml file - Instructions Within.<br/>
-Alternatively, you can do this in the application via the command line interface.<br/><br/>
+To configure this, navigate to the config subfolder and edit the config.yml file - Instructions Within.<br/><br/>
 
 To visualise your choice of instrument run the jupyter notebook, eda.ipynb in the base folder. You can do this in the Linux Terminal after navigating to your base folder, TYPE: jupyter lab<br/><br/><br/>
 
@@ -26,7 +22,7 @@ To visualise your choice of instrument run the jupyter notebook, eda.ipynb in th
 
 I aim to write clear, simple and clean code so that others can inspect, maintain or append with ease. Sponsoring me helps others navigate better and with simplicity as it allows me to focus on delivering a better product or thing than on paying the bills.<br/><br/>
 
-You can do this thru GitHub Sponsors when it is made available to me if you like to.<br/><br/><br/>
+You can do this thru GitHub Sponsors when and if it is made available to me.<br/><br/><br/>
 
 ## Disclaimer
 
