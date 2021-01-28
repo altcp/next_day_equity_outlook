@@ -32,3 +32,4 @@ configuration:
   default_stock_symbol: MFST
   default_country_of_exchange: United States 
   default_stock_price: close
+  default_number_of_lags_univariate: 3
