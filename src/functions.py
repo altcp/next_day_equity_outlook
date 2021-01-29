@@ -61,7 +61,10 @@ def process_data(display_charts, univariate, tech_disruptor=False):
     end = td.replace(hour=0, minute=0, second=0, microsecond=0)
     start = end - pd.tseries.offsets.BusinessDay(n=181)
     
-
+    end = end.date().strftime('%d/%m/%Y')
+    start = start.date().strftime('%d/%m/%Y')
+    
+    
     #Get Query Details
     if (tech_disruptor == False):
         
@@ -80,6 +83,15 @@ def process_data(display_charts, univariate, tech_disruptor=False):
         target = query['target'].iloc[-1]
         api = query['api'].iloc[-1]
 
+        
+    print(" ")
+    print(" ")
+    print("Data Observation Period: {}".format(symbol))
+    print("Start: " + str(start))
+    print("End: " + str(end))
+    print(" ")
+    print(" ")
+    
 
     #Get Data
     if (api == 0):
@@ -95,8 +107,13 @@ def process_data(display_charts, univariate, tech_disruptor=False):
     #Univariate Exploration
     if (univariate):
         
-        number_of_lags = config['configuration']['default_number_of_lags_univariate']
+        number_of_lags = config['settings']['number_of_lags_univariate']
+        small_gain = config['settings']['size_of_small_gain_or_loss']
+        
         fit['Y'] = df1[target].shift(-1)
+        fit['YR'] = np.log(fit['Y']/fit['Y'].shit(1))
+        fit['YB'] = pd.cut(x=fit['YR'], bins=[fit['YR'].min(), -(small_gain), 0, small_gain, fit['YR'].max()], 
+                           labels=['big loss', 'small loss', 'small gain', 'big gain'])
         
         for i in range(number_of_lags):
             if (i == 0):
@@ -104,10 +121,13 @@ def process_data(display_charts, univariate, tech_disruptor=False):
             else:
                 column_name = 'X' + str(number_of_lags)
                 fit[column_name] = df1[target].shift(i)
-        
+                
         fit1 = fit.dropna().reset_index(drop=True)
+        
         fit_y = fit1['Y']
         fix_x = fit1.drop('Y', axis=1)
+        fit_bins = fit['YB']
+        
         
     else:
         
