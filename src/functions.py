@@ -108,7 +108,7 @@ def process_data(display_charts, univariate, tech_disruptor=False):
     if (univariate):
         
         number_of_lags = config['settings']['number_of_lags_univariate']
-        small_gain = config['settings']['size_of_small_gain_or_loss']
+        small_gain = config['settings']['max_size_of_small_gain_or_loss']
         
         fit['Y'] = df1[target].shift(-1)
         fit['YR'] = np.log(fit['Y']/fit['Y'].shit(1))
