@@ -12,6 +12,8 @@ import datetime
 import investpy
 import numpy as np
 import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
 
 
 # In[2]:
@@ -95,10 +97,25 @@ def process_data(display_charts, univariate, tech_disruptor=False):
 
     #Get Data
     if (api == 0):
-
-        df = investpy.get_stock_historical_data(stock=symbol, country=country, from_date=start, to_date=end)
-        df1 = df.dropna().reset_index(drop=True)
-
+        
+        try:
+            
+            #Use Investpy
+            df = investpy.get_stock_historical_data(stock=symbol, country=country, from_date=start, to_date=end)
+            df1 = df.dropna().reset_index(drop=True)
+            pass
+        
+        except:
+            
+            #Use Yahoo Finance
+            try:
+                print(" ")    
+                pass
+                
+            except:
+                print("SSQR: Symbol Not Available or Public Website Down or Blocked.")
+            
+            
     else:
         
         df1 = use_api(api)
@@ -109,26 +126,36 @@ def process_data(display_charts, univariate, tech_disruptor=False):
         
         number_of_lags = config['settings']['number_of_lags_univariate']
         small_gain = config['settings']['max_size_of_small_gain_or_loss']
+        fit = pd.DataFrame()    
+        fit[target] = df1[target].shift(-1)
+        #print(df1)
         
-        fit['Y'] = df1[target].shift(-1)
-        fit['YR'] = np.log(fit['Y']/fit['Y'].shit(1))
-        fit['YB'] = pd.cut(x=fit['YR'], bins=[fit['YR'].min(), -(small_gain), 0, small_gain, fit['YR'].max()], 
+        fit['Returns'] = np.log(fit[target]/fit[target].shift(1))
+        fit['Outcome'] = pd.cut(x=fit['Returns'], bins=[fit['Returns'].min(), -(small_gain), 0, small_gain, fit['Returns'].max()], 
                            labels=['big loss', 'small loss', 'small gain', 'big gain'])
+        
         
         for i in range(number_of_lags):
             if (i == 0):
                 fit['X0'] = df1[target]
             else:
-                column_name = 'X' + str(number_of_lags)
+                column_name = 'X' + str(i)
                 fit[column_name] = df1[target].shift(i)
                 
+                
         fit1 = fit.dropna().reset_index(drop=True)
+        fit_y = fit1[[target, 'Returns', 'Outcome']]
+        fit_x = fit1.drop([target, 'Returns', 'Outcome'], axis=1)
+        fit_bins = fit['Outcome']
         
-        fit_y = fit1['Y']
-        fix_x = fit1.drop('Y', axis=1)
-        fit_bins = fit['YB']
-        
-        
+        print(fit1)
+        print(" ")
+        print(" ")
+        #print(fit_y)
+        #print(" ")
+        #print(" ")
+        #print(fit_x)
+
     else:
         
         print(" ")
@@ -137,6 +164,8 @@ def process_data(display_charts, univariate, tech_disruptor=False):
     #Display Charts
     if (display_charts):
 
+        print("Unified Data Exploration - Univariate Dataset.")
+        print(" ")
         print(" ")
     
     else:

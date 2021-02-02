@@ -6,7 +6,7 @@
 settings:
   random_seed_ID: 123
   tech_disruptor: False
-  number_of_lags_univariate: 3
+  number_of_lags_univariate: 5
   max_size_of_small_gain_or_loss: 0.03
 
 
@@ -30,7 +30,7 @@ configuration:
   #To configure the Visualization Notebook, you will need to provide the stock symbol in the prescibed notation 
   #as well as the country hosting the exchange in which the stock trades on. 
 
-  #Do follow the naming convention of the data scraping python package, InvestPy. 
+  #Do follow the naming convention of the data scraping python package, InvestPy, Case Senstive.
   default_stock_symbol: MSFT
   default_country_of_exchange: United States 
-  default_stock_price: close
+  default_stock_price: Close
