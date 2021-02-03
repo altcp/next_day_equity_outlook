@@ -14,6 +14,7 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
+import pandas_datareader.data as web
 
 
 # In[2]:
@@ -109,7 +110,9 @@ def process_data(display_charts, univariate, tech_disruptor=False):
             
             #Use Yahoo Finance
             try:
-                print(" ")    
+                df = web.DataReader(symbol, 'yahoo', start=start, end=end)
+                df1 = pd.DataFrame(df)
+                #print(df1)
                 pass
                 
             except:
