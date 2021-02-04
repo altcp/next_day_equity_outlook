@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
-
 
 import os
 import time
@@ -15,25 +13,26 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 import pandas_datareader.data as web
+import pmdarima as pm
 
-
-# In[2]:
+from statsmodels.tsa.arima_model import ARIMA
 
 
 #Load Configuration
 with open('./config/config.yaml') as file:
     config = yaml.safe_load(file)
 
-
-# In[3]:
-
-
+    
 # Set Random Seed
 ID = config['settings']['random_seed_ID']
 np.random.seed(ID)
 
 
-# In[4]:
+
+def use_api(api):
+
+    return df1
+
 
 
 def get_eda(dashboard_required=False, univariate=True):
@@ -54,10 +53,8 @@ def get_eda(dashboard_required=False, univariate=True):
     return features, target, bins
 
 
-# In[5]:
 
-
-def process_data(display_charts, univariate, tech_disruptor=False):
+def process_data(display_eda, univariate, tech_disruptor=False):
 
     #Scope Relevant Data
     td = pd.Timestamp(round(datetime.datetime.now().timestamp(), 0), unit='s')
@@ -66,6 +63,7 @@ def process_data(display_charts, univariate, tech_disruptor=False):
     
     end = end.date().strftime('%d/%m/%Y')
     start = start.date().strftime('%d/%m/%Y')
+    pred_df = pd.DataFrame()
     
     
     #Get Query Details
@@ -101,7 +99,7 @@ def process_data(display_charts, univariate, tech_disruptor=False):
         
         try:
             
-            #Use Investpy
+            #Use Investing.com thru Investpy
             df = investpy.get_stock_historical_data(stock=symbol, country=country, from_date=start, to_date=end)
             df1 = df.dropna().reset_index(drop=True)
             pass
@@ -118,7 +116,6 @@ def process_data(display_charts, univariate, tech_disruptor=False):
             except:
                 print("SSQR: Symbol Not Available or Public Website Down or Blocked.")
             
-            
     else:
         
         df1 = use_api(api)
@@ -127,8 +124,13 @@ def process_data(display_charts, univariate, tech_disruptor=False):
     #Univariate Exploration
     if (univariate):
         
-        number_of_lags = config['settings']['number_of_lags_univariate']
         small_gain = config['settings']['max_size_of_small_gain_or_loss']
+        test_size = config['settings']['test_size']
+        
+        max_number_of_lags = config['settings']['max_number_of_lags']
+        max_moving_average_window = config['settings']['max_ma_term']
+        frequency = config['settings']['frequency']
+
         fit = pd.DataFrame()    
         fit[target] = df1[target].shift(-1)
         #print(df1)
@@ -137,57 +139,56 @@ def process_data(display_charts, univariate, tech_disruptor=False):
         fit['Outcome'] = pd.cut(x=fit['Returns'], bins=[fit['Returns'].min(), -(small_gain), 0, small_gain, fit['Returns'].max()], 
                            labels=['big loss', 'small loss', 'small gain', 'big gain'])
         
-        
-        for i in range(number_of_lags):
-            if (i == 0):
+        #Dataframe For Visualization
+        for i in range(max_number_of_lags):
+            if(i == 0):
                 fit['X0'] = df1[target]
             else:
                 column_name = 'X' + str(i)
                 fit[column_name] = df1[target].shift(i)
-                
-                
+        
         fit1 = fit.dropna().reset_index(drop=True)
         fit_y = fit1[[target, 'Returns', 'Outcome']]
         fit_x = fit1.drop([target, 'Returns', 'Outcome'], axis=1)
         fit_bins = fit['Outcome']
         
-        print(fit1)
-        print(" ")
-        print(" ")
-        #print(fit_y)
-        #print(" ")
-        #print(" ")
-        #print(fit_x)
-
-    else:
+        #Train-Test Split
+        train_returns = fit_y['Returns'].head(int(len(fit_y) * (1 - test_size))) 
+        test_returns = fit_y['Returns'].tail(int(len(fit_y) * test_size))
         
-        print(" ")
+        #Call Baseline
+        baseline_model = baseline_r_model(train_returns, max_number_of_lags, frequency, max_moving_average_window)
 
+        
+        #Display 
+        if (display_eda):
+        
+            print(baseline_model.summary())
+            print(" ")
+            print(" ")
+            print(fit1)
+        
+        else:
 
-    #Display Charts
-    if (display_charts):
-
-        print("Unified Data Exploration - Univariate Dataset.")
-        print(" ")
-        print(" ")
-    
+            print(" ")
+        
+        
     else:
-
+        #Multivariate
         print(" ")
 
-
+   
     return fit_x, fit_y, fit_bins
 
 
-# In[6]:
 
-
-def use_api(api):
-
-    return df1
-
-
-# In[ ]:
+#Box-Jenkins Method, 1970
+def baseline_r_model(series, p, m, q):
+    
+    optimized_model = pm.auto_arima(series, start_p=1, start_q=1, test='adf', max_p=p, max_q=q, m=m, d=None, seasonal=False, start_P=0, D=0, 
+    trace=False, error_action='ignore', suppress_warnings=True, stepwise=True)
+      
+    return optimized_model
 
 
 
