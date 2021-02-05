@@ -11,10 +11,11 @@ import investpy
 import numpy as np
 import pandas as pd
 import seaborn as sns
+import pmdarima as pm
 import matplotlib.pyplot as plt
 import pandas_datareader.data as web
-import pmdarima as pm
 
+from pmdarima.arima import ndiffs
 from statsmodels.tsa.arima_model import ARIMA
 
 
@@ -60,10 +61,14 @@ def process_data(display_eda, univariate, tech_disruptor=False):
     td = pd.Timestamp(round(datetime.datetime.now().timestamp(), 0), unit='s')
     end = td.replace(hour=0, minute=0, second=0, microsecond=0)
     start = end - pd.tseries.offsets.BusinessDay(n=181)
+    obs_end = end - pd.tseries.offsets.BusinessDay(n=1)
     
     end = end.date().strftime('%d/%m/%Y')
     start = start.date().strftime('%d/%m/%Y')
+    obs_end = obs_end.date().strftime('%d/%m/%Y')
+
     pred_df = pd.DataFrame()
+    outlook_df = pd.DataFrame()
     
     
     #Get Query Details
@@ -87,9 +92,9 @@ def process_data(display_eda, univariate, tech_disruptor=False):
         
     print(" ")
     print(" ")
-    print("Data Observation Period: {}".format(symbol))
+    print("Data Observation: {}".format(symbol))
     print("Start: " + str(start))
-    print("End: " + str(end))
+    print("End: " + str(obs_end))
     print(" ")
     print(" ")
     
@@ -99,17 +104,17 @@ def process_data(display_eda, univariate, tech_disruptor=False):
         
         try:
             
-            #Use Investing.com thru Investpy
-            df = investpy.get_stock_historical_data(stock=symbol, country=country, from_date=start, to_date=end)
-            df1 = df.dropna().reset_index(drop=True)
+            #Use Yahoo Finance
+            df = web.DataReader(symbol, 'yahoo', start=start, end=end)
+            df1 = pd.DataFrame(df)
             pass
         
         except:
             
-            #Use Yahoo Finance
+            #Use Investing.com thru Investpy
             try:
-                df = web.DataReader(symbol, 'yahoo', start=start, end=end)
-                df1 = pd.DataFrame(df)
+                df = investpy.get_stock_historical_data(stock=symbol, country=country, from_date=start, to_date=end)
+                df1 = df.dropna().reset_index(drop=True)
                 #print(df1)
                 pass
                 
@@ -129,14 +134,16 @@ def process_data(display_eda, univariate, tech_disruptor=False):
         
         max_number_of_lags = config['settings']['max_number_of_lags']
         max_moving_average_window = config['settings']['max_ma_term']
+        max_number_of_diff = config['settings']['max_number_of_diff']
+        
         frequency = config['settings']['frequency']
 
         fit = pd.DataFrame()    
         fit[target] = df1[target].shift(-1)
         #print(df1)
         
-        fit['Returns'] = np.log(fit[target]/fit[target].shift(1))
-        fit['Outcome'] = pd.cut(x=fit['Returns'], bins=[fit['Returns'].min(), -(small_gain), 0, small_gain, fit['Returns'].max()], 
+        fit['Log Returns'] = np.log(fit[target]/fit[target].shift(1))
+        fit['Outcome'] = pd.cut(x=fit['Log Returns'], bins=[fit['Log Returns'].min(), -(small_gain), 0, small_gain, fit['Log Returns'].max()], 
                            labels=['big loss', 'small loss', 'small gain', 'big gain'])
         
         #Dataframe For Visualization
@@ -148,25 +155,33 @@ def process_data(display_eda, univariate, tech_disruptor=False):
                 fit[column_name] = df1[target].shift(i)
         
         fit1 = fit.dropna().reset_index(drop=True)
-        fit_y = fit1[[target, 'Returns', 'Outcome']]
-        fit_x = fit1.drop([target, 'Returns', 'Outcome'], axis=1)
+        fit_y = fit1[[target, 'Log Returns', 'Outcome']]
+        fit_x = fit1.drop([target, 'Log Returns', 'Outcome'], axis=1)
         fit_bins = fit['Outcome']
         
         #Train-Test Split
-        train_returns = fit_y['Returns'].head(int(len(fit_y) * (1 - test_size))) 
-        test_returns = fit_y['Returns'].tail(int(len(fit_y) * test_size))
+        train_returns = fit_y['Log Returns'].head(int(len(fit_y) * (1 - test_size))) 
+        test_returns = fit_y['Log Returns'].tail(int(len(fit_y) * test_size))
         
         #Call Baseline
-        baseline_model = baseline_r_model(train_returns, max_number_of_lags, frequency, max_moving_average_window)
-
+        baseline_model, pred_df['Box-Jenkins'], outlook_df['SARIMAX'] = baseline_r_model(train_returns, test_returns, max_number_of_lags, 
+                                                                                          max_number_of_diff, frequency, max_moving_average_window) 
         
         #Display 
         if (display_eda):
-        
-            print(baseline_model.summary())
             print(" ")
             print(" ")
             print(fit1)
+            print(" ")
+            print(" ")
+            print(baseline_model.summary())
+            print(" ")
+            print(" ")
+            print("Outlook (Predicted Log Returns) for: {}".format(end))
+            print(" ")
+            print(outlook_df)
+            print(" ")
+            print(" ")
         
         else:
 
@@ -183,12 +198,34 @@ def process_data(display_eda, univariate, tech_disruptor=False):
 
 
 #Box-Jenkins Method, 1970
-def baseline_r_model(series, p, m, q):
+def baseline_r_model(train_set, test_set, p, d, m, q):
+    seasonal = config['settings']['conduct_seasonal_test']
     
-    optimized_model = pm.auto_arima(series, start_p=1, start_q=1, test='adf', max_p=p, max_q=q, m=m, d=None, seasonal=False, start_P=0, D=0, 
-    trace=False, error_action='ignore', suppress_warnings=True, stepwise=True)
-      
-    return optimized_model
+    #Estimating the Difference Term - alkaline-ml.com
+    kpss_test = ndiffs(train_set, alpha=0.05, test='kpss', max_d=d)
+    adf_test = ndiffs(train_set, alpha=0.05, test='adf', max_d=d)
+    num_of_diffs = max(kpss_test, adf_test)
+    
+    optimized_model = pm.auto_arima(train_set, d=num_of_diffs, start_p=0, start_q=0, start_P=0, max_p=p, max_q=q, trace=False, 
+                                    seasonal=seasonal, error_action='ignore', suppress_warnings=True)    
+    
+    predictions = []
+    outlook = []
+    
+    #Measure the Performance
+    for new_observation in test_set:
+        pred_array = optimized_model.predict(n_periods=1)
+        pred_list = pred_array.tolist()[0]
+        predictions.append(pred_list)
+        
+        optimized_model.update(new_observation)
+    
+    #Make the Forecast
+    outlook_array = optimized_model.predict(n_periods=1)
+    outlook_list = outlook_array.tolist()[0]
+    outlook.append(outlook_list)
+    
+    return optimized_model, predictions, outlook
 
 
 

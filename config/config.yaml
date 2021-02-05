@@ -6,12 +6,17 @@
 settings:
   random_seed_ID: 123
   tech_disruptor: False
-  max_size_of_small_gain_or_loss: 0.03
   test_size: 0.3
   
+  #Log Returns
+  max_size_of_small_gain_or_loss: 0.03
+  
+  #SARIMAX
+  max_number_of_diff: 3
   max_number_of_lags: 3
   max_ma_term: 3
   frequency: 1
+  conduct_seasonal_test: True
 
 
 locations: 
