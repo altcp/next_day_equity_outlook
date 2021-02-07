@@ -11,7 +11,7 @@ settings:
   #Log Returns
   max_size_of_small_gain_or_loss: 0.03
   
-  #SARIMAX
+  #Box Jenkins
   max_number_of_diff: 3
   max_number_of_lags: 3
   max_ma_term: 3
