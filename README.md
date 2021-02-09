@@ -32,7 +32,7 @@ Ideal Condition(s) are a set of assumptions taken in some model(s) used in Funda
 
 The techniques being automated here are not immune to such assumptions or assumptions in general. While over time I can or may code out such formal methods, it cannot with or without relevant alternative data sources truly ignore, avoid or be absent of the standard provided by the attestation process or the additional due diligence conducted on the buy-side. It is the sum of these that approximates Idea Conditions.<br/><br/>
 
-The outlook provided by the automation with regards to price action is therefore not definative in nature but indicative with varying degree(s) of error. This is the general case or the case for all types of financial analysis. Without proven Artificial Intelligence and despite a provision for alternative data sources thru a function implementing the use of that, it is up to the user to make the necessary inference using acumen and to exercise prudence in execution.<br/><br/>
+The outlook provided by the automation with regards to price action is therefore not definitive in nature, but indicative with varying degree(s) of error. This is the general case or the case for all types of financial analysis. Without proven Artificial Intelligence and despite a provision for alternative data sources thru a function implementing the use of that, it is up to the user to make the necessary inference using acumen and to exercise prudence in execution.<br/><br/>
 
 Nonetheless, everyone should exercise caution when reviewing the output of the automation and should seek independent financial advice when unsure before making any type of financial decision(s).<br/><br/>
 
