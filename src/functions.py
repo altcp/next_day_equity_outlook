@@ -5,6 +5,7 @@
 import os
 import time
 import yaml
+import random
 import sqlite3
 import datetime
 import investpy
@@ -30,8 +31,9 @@ with open('./config/config.yaml') as file:
     
 # Set Random Seed
 ID = config['settings']['random_seed_ID']
+os.environ['PYTHONHASHSEED']=str(ID)
 np.random.seed(ID)
-
+random.seed(ID)
 
 
 def use_api(api):
@@ -159,7 +161,7 @@ def process_data(display_eda, univariate, tech_disruptor=False):
         
         fit1 = fit.dropna().reset_index(drop=True)
         fit2 = fit1[['Date', target, 'Log Returns', 'Outcome']] 
-        fit_svr = fit1.drop(['Date', 'Outcome'], axis=1)
+        fit_svr = fit1.drop(['Date', 'Outcome', target], axis=1)
         #print(fit_svr)
         
         
@@ -172,7 +174,7 @@ def process_data(display_eda, univariate, tech_disruptor=False):
         #SVR
         train_returns = fit_svr.head(int(len(fit_svr) * (1 - test_size))) 
         test_returns = fit_svr.tail(int(len(fit_svr) * test_size)).reset_index(drop=True)
-        pred_df['SVR'], outlook_df['SVR'] = svr_r_model(train_returns, test_returns, fit_svr, target)
+        pred_df['SVR'], outlook_df['SVR'] = svr_r_model(train_returns, test_returns, fit_svr)
         #print(pred_df)
     
     
@@ -215,7 +217,7 @@ def baseline_r_model(train_set, test_set, p, d, m, q):
     num_of_diffs = max(kpss_test, adf_test)
     
     optimized_model = pm.auto_arima(train_set, d=num_of_diffs, start_p=0, start_q=0, start_P=0, max_p=p, max_q=q, trace=False, 
-                                    seasonal=seasonal, error_action='ignore', suppress_warnings=True)    
+                                    seasonal=seasonal, error_action='ignore', random_state=ID, suppress_warnings=True)    
     
     predictions = []
     outlook = []
@@ -238,17 +240,17 @@ def baseline_r_model(train_set, test_set, p, d, m, q):
 
 
 #Support Vector Regression, 1995 
-def svr_r_model(train_set, test_set, full_set, target):
+def svr_r_model(train_set, test_set, full_set):
     
     #Preprocessing
     train_y = np.asarray(train_set['Log Returns']) 
-    train_x = np.asarray(train_set.loc[:, train_set.columns.difference(['Log Returns', target])])
+    train_x = np.asarray(train_set.loc[:, train_set.columns.difference(['Log Returns', 'X0'])])
     
     test_y = np.asarray(test_set['Log Returns']) 
-    test_x = np.asarray(test_set.loc[:, test_set.columns.difference(['Log Returns', target])])
+    test_x = np.asarray(test_set.loc[:, test_set.columns.difference(['Log Returns', 'X0'])])
     
     full_y = np.asarray(full_set['Log Returns']) 
-    full_x = np.asarray(full_set.loc[:, full_set.columns.difference(['Log Returns', target])])
+    full_x = np.asarray(full_set.loc[:, full_set.columns.difference(['Log Returns', 'X0'])])
     
     column_name = 'X' + str(len(test_set.columns)-3) 
     outlook_x = np.asarray(test_set.loc[:, test_set.columns.difference(['Log Returns', column_name])])
@@ -264,7 +266,7 @@ def svr_r_model(train_set, test_set, full_set, target):
             'svr__epsilon': [0.0001, 0.0005, 0.001]
         }
     
-    search = GridSearchCV(pipe, param_grid, n_jobs=-2)
+    search = GridSearchCV(pipe, param_grid, n_jobs=-2, cv=3)
     search.fit(train_x, train_y)
     predictions = search.predict(test_x)
     
