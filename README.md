@@ -30,7 +30,7 @@ You can do this thru GitHub Sponsors if and when it is made available to me.<br/
 
 Ideal Condition(s) are a set of assumptions taken in some model(s) used in Fundamental Analysis. Despite such formal methods, the world we live in is seldom or never ideal. Making considered or control assumptions simplify the complex world we live in and such is often or can be the manner in which the scientific community communicates.<br/><br/> 
 
-While over time I can or may code out such formal methods, it cannot with or without relevant alternative data sources truly ignore, avoid or be absent of the standard provided by the attestation process or the additional due diligence conducted on the buy-side. It is the sum of these that approximates Idea Conditions.<br/><br/>
+While I can or may over time code out such formal methods, it cannot with or without relevant alternative data sources truly ignore, avoid or be absent of the standard provided by the attestation process or the additional due diligence conducted on the buy-side. It is the sum of these that approximates Idea Conditions.<br/><br/>
 
 The techniques being automated here are not immune to such assumptions or assumptions in general. The outlook provided by the automation with regards to price action is therefore not definitive in nature, but indicative with varying degree(s) of error. This is the general case or the case for all types of financial analysis.
 <br/><br/>
