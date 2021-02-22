@@ -48,12 +48,12 @@ def cli():
             get_eda()
             
         elif (input_ans_one == 'projection'):
-            get_eda()
-    
-        elif (input_ans_one == 'help'):
             print("Future Development. ")
             print(" ")    
             print(" ")
+    
+        elif (input_ans_one == 'help'):
+            get_help()
         
         elif (input_ans_one == 'exit')
             break
