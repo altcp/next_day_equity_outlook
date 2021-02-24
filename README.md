@@ -7,7 +7,7 @@ A command line tool that provides a quantitative outlook for the next business d
 The tool retrieves price information for the equity instrument of your choice. It then automates the basic quantitative work. What you will see as a result of this automation is the outlook for the next business day.<br/><br/><br/>
 
 ## Instructions for the use of a release
-Python 3.7.3 was the python version used in testing prior to containerization.<br/>
+Python 3.7.3 was the python version used.<br/>
 You can, for example, use a Raspberry Pi or the Windows Subsystem for Linux once you have a correct python version installed.
 <br/><br/>
 
