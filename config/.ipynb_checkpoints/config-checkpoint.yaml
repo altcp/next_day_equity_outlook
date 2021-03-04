@@ -1,0 +1,43 @@
+#This is the Configuration fIle for the Project.
+#Variable on left (e.g., random_seed_ID), value on right (e.g., 123).
+
+
+#For Monte Carlo Stimulation(s) or Reproducibility
+settings:
+  random_seed_ID: 123
+  tech_disruptor: False
+  test_size: 0.3
+  
+  #Log Returns
+  max_size_of_small_gain_or_loss: 0.03
+  
+  #Box Jenkins
+  max_number_of_diff: 3
+  max_number_of_lags: 3
+  max_ma_term: 3
+  frequency: 1
+  conduct_seasonal_test: True
+
+
+locations: 
+  db_path: "./data/temp.db"
+  model_path:
+
+
+api:
+  #Data Providers
+
+  #Delivery Methods
+  telegram:
+    token: 
+    chat_ID: 
+
+
+configuration:
+  #To configure the Visualization Notebook, you will need to provide the stock symbol in the prescibed notation 
+  #as well as the country hosting the exchange in which the stock trades on. 
+
+  #Do follow the naming convention of the data scraping python package, InvestPy, Case Senstive.
+  default_stock_symbol: MSFT
+  default_country_of_exchange: United States 
+  default_stock_price: Close

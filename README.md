@@ -1,14 +1,14 @@
 # Next Business Day Outlook
 
-A command line tool that provides a quantitative outlook for the next business day.<br/><br/><br/>
+A command line tool that provides a quantitative outlook.<br/><br/><br/>
 
 ## Overview
 
-The tool retrieves price information for the equity instrument of your choice. It then automates the basic quantitative work. What you will see as a result of this automation is the outlook for the next business day.<br/><br/><br/>
+The tool retrieves price information for the equity instrument of your choice. It then automates the basic quantitative work. At minimum, the automation provides an outlook for the next business day.<br/><br/><br/>
 
 ## Instructions for the use of a release
-Python 3.7.3 was the python version used.<br/>
-You can, for example, use a Raspberry Pi or the Windows Subsystem for Linux once you have a correct python version installed.
+Python 3.8.5 was the python version used.<br/>
+Ubuntu Server 20.04.2 LTS on Raspberry Pi 4B was the testing environment.  
 <br/><br/>
 
 In the Linux Terminal navigate to the base folder:<br/>

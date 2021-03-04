@@ -1,5 +1,5 @@
 import gc
-from functions import get_eda, check_symbol
+from functions import get_eda
 
 
 def cli():

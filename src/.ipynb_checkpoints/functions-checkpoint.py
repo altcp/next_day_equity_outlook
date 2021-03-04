@@ -60,7 +60,7 @@ def get_eda(dashboard_required=False, univariate=True):
         print(" ")
         print(" ")
         print("Sell Side Quantative Research (SSQR)")
-        print("Next Business Day Outlook, 0.0.1")
+        print("Next Period Outlook, 0.0.1")
         predictions, outlook, outcome = process_data(dashboard_required, univariate)
     
     return predictions, outlook, outcome
