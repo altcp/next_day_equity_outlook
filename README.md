@@ -1,10 +1,10 @@
 # Sell Side Quantitative Research
 
-A command line tool that provides a quantitative outlook.<br/><br/><br/>
+A tool that simplifies and automates the task of conducting quantitative research.<br/><br/><br/>
 
 ## Overview
 
-The tool retrieves price information for the equity instrument of your choice. It then automates the basic quantitative work. At minimum, the automation provides an outlook for the next business day.<br/><br/><br/>
+The tool retrieves price information for the equity instrument of your choice. It then automates the quantitative work. At minimum, the automation provides an outlook for the next business day.<br/><br/><br/>
 
 ## Instructions for the use of a release
 Python 3.8.5 was the python version used.<br/>
