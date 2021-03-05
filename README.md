@@ -4,7 +4,7 @@ A tool that simplifies and automates the task of conducting quantitative researc
 
 ## Overview
 
-The tool retrieves price information for the equity instrument of your choice. It then automates the quantitative work. At minimum, the automation provides an outlook for the next business day.<br/><br/><br/>
+At minimum, the automation provides an outlook for the next business day. For this use case, the tool retrieves price information for the equity instrument of your choice. It then automates the quantitative work using established quantitative methods.<br/><br/><br/>
 
 ## Instructions for the use of a release
 Python 3.8.5 was the python version used.<br/>
