@@ -1,4 +1,4 @@
-# Sell Side Quantative Research
+# Sell Side Quantitative Research
 
 A command line tool that provides a quantitative outlook.<br/><br/><br/>
 
