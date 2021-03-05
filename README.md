@@ -1,4 +1,4 @@
-# Next Business Day Outlook
+# Sell Side Quantative Research
 
 A command line tool that provides a quantitative outlook.<br/><br/><br/>
 
